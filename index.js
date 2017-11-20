@@ -24,3 +24,15 @@ vorpal
         Promise.resolve(require("./actions/command-xyz")(this, args)).then(repl ? cb : null);
     });
 
+if (repl) {
+    vorpal
+        .delimiter("$app")
+        .show();
+} else {
+    vorpal
+        .on("client_command_executed", function () {
+            process.exit(0)
+        })
+        .delimiter("$app")
+        .parse(argv.slice(0));
+}
