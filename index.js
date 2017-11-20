@@ -11,3 +11,10 @@ if (args.h || args.help) {
     argv = [].concat.apply(argv.slice(0, 2).concat("help"), argv.slice(2).filter(i => i[0] !== "-"));
 }
 
+vorpal
+    .catch("[words...]", "Catches wrong commands")
+    .action(function (args, cb) {
+        this.log((args.words ? args.words.join(" ") : "<unknown>") + " is not a valid command.");
+        cb();
+    });
+
