@@ -18,3 +18,9 @@ vorpal
         cb();
     });
 
+vorpal
+    .command("XYZ", "some XYZ command")
+    .action(function (args, cb) {
+        Promise.resolve(require("./actions/command-xyz")(this, args)).then(repl ? cb : null);
+    });
+
