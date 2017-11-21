@@ -1,10 +1,11 @@
-const Path = require("path");
+#!/usr/bin/env node
+'use strict';
 
-const Minimist = require("minimist");
+const minimist = require("minimist");
 const vorpal = require("vorpal")();
 
 let argv = process.argv.slice(0);
-let args = Minimist(argv.slice(2));
+let args = minimist(argv.slice(2));
 let repl = !(args._ && args._.length) && !(args.h || args.help);
 
 if (args.h || args.help) {
