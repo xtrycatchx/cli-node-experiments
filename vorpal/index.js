@@ -3,6 +3,7 @@
 
 const minimist = require("minimist");
 const vorpal = require("vorpal")();
+const cmdXyz = require("./actions/command-xyz")
 
 let argv = process.argv.slice(0);
 let args = minimist(argv.slice(2));
@@ -22,7 +23,24 @@ vorpal
 vorpal
     .command("XYZ", "some XYZ command")
     .action(function (args, cb) {
-        Promise.resolve(require("./actions/command-xyz")(this, args)).then(repl ? cb : null);
+        let promise = this.prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Whats your name : '
+            }
+        ]);
+
+        promise.then(function(answers){
+            var cmdBack = cmdXyz.execute(answers);
+            cmdBack.then(function(result) {
+                console.log(result)
+                repl ? cb : null
+            }).catch(err=> {
+                console.log(err)
+                repl ? cb : null
+            })
+        })
     });
 
 if (repl) {
@@ -35,5 +53,5 @@ if (repl) {
             process.exit(0)
         })
         .delimiter("$app")
-        .parse(argv.slice(0));
+        .parse(argv);
 }
