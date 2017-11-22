@@ -1,4 +1,6 @@
-module.exports = function(vorpal, args) {
-    console.log(args)
-    //console.log(args);
+exports.execute = function(args) {
+    return new Promise((resolve,reject)=> {
+        console.log(`executing ${JSON.stringify(args)}`);
+        resolve('DONE')
+    });
 }
